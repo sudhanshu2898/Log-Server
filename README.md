@@ -21,7 +21,7 @@ Server can be started simply by creating instance of Server class.
 Server class has 2 constructor, one is default and other is parameterised.  
 Default constructor runs the server with following configuration:-
 * Host: `localhost`
-* Port: `9999`
+* Port: `7777`
 * Max Bytes: `524288`
 * Worker Thread: `1`
 
@@ -33,7 +33,7 @@ With parameterised constructor we can specify our own configuration:
     Server(String serverHost, int serverPort, int maxBytes, int workerThreadSize);
 */
 //Creating Instance
-new Server("localhost", 7777, 2048, 2);
+new Server("localhost", 9999, 2048, 2);
 
 ```
 
