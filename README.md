@@ -15,13 +15,26 @@ It can generate following levels of logs:-
 
 Logs can be created in CSV or JSON format.
 
+### *Staring Kafka* ###
+First step is to start ZooKeeper and Kafka Server.
+
+Start Zookeeper with following command
+```
+.\path\to\zookeeper-server-start.bat .\path\to\config\zookeeper.properties
+```
+
+Start Kafka with following command
+```
+.\path\to\kafka-server-start.bat .\path\to\config\server.properties
+```
+
 ### *Starting Server:* 💻 ###
 
 Server can be started simply by creating instance of Server class.  
 Server class has 2 constructor, one is default and other is parameterised.  
 Default constructor runs the server with following configuration:-
 * Host: `localhost`
-* Port: `7777`
+* Port: `9999`
 * Max Bytes: `524288`
 * Worker Thread: `1`
 
@@ -33,7 +46,7 @@ With parameterised constructor we can specify our own configuration:
     Server(String serverHost, int serverPort, int maxBytes, int workerThreadSize);
 */
 //Creating Instance
-new Server("localhost", 9999, 2048, 2);
+new Server("localhost", 7777, 2048, 2);
 
 ```
 
@@ -49,15 +62,25 @@ Eg: `{"service":"accounts-service"}`
 
 And BOOM 💥💥🎉🎉. Your service is now registered with the Log-Server. Now you can generate logs.
 
+### *Starting Log Writer Server* ###
+To Start Log-Writer Server Simply create instance of Consumer class.
+
+```
+//Creating Instance
+new Consumer();
+```
+
+
 ### *Generating Logs:* 📝 ###
 Generating logs is very simple, send your log as JSON string to server 👌 .
 
 JSON string should have 3 objects only.
-* level: Indicating Log level, should be one amoung those mentioned above.
+* bucket: It is a unique UUID for grouping same types of log together.
+* level: Indicating Log level, should be one among those mentioned above.
 * format: Indicating log format, should be either CSV or JSON only.
 * row: A JSON String representing data.
 
-Eg: `{"level":"INFO", "format":"CSV", "row":{"message":"This is a test message", "url":"github.com/sudhanshu2898"}}`
+Eg: `{"bucket":"UNIQUE-BUCKET-UUID", "level":"INFO", "format":"CSV", "row":{"message":"This is a test message", "url":"github.com/sudhanshu2898","name":"Sudhanshu Jha"}}`
 
 ### *Example:* ###
 
@@ -85,6 +108,7 @@ public class Client {
             JSONObject log = new JSONObject();
             log.put("level", "INFO");
             log.put("format", "CSV");
+            log.put("bucket", "UNIQUE-BUCKET-UUID");
             log.put("row", row);
 
             Socket socket = new Socket("localhost", 7777);
