@@ -15,7 +15,7 @@ It can generate following levels of logs:-
 
 Logs can be created in CSV or JSON format.
 
-### *Staring Kafka* ###
+### *Starting Kafka* ###
 First step is to start ZooKeeper and Kafka Server.
 
 Start Zookeeper with following command
